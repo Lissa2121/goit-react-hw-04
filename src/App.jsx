@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { ToastContainer } from "react-hot-toast";
-import SearchBar from "./components/SearchBar";
-import ImageGallery from "./components/ImageGallery";
-import Loader from "./components/Loader";
-import ErrorMessage from "./components/ErrorMessage";
-import LoadMoreBtn from "./components/LoadMoreBtn";
-import ImageModal from "./components/ImageModal";
+import SearchBar from "./components/SearchBar/SearchBar";
+import ImageGallery from "./components/ImageGallery/ImageGallery";
+import Loader from "./components/Loader/Loader";
+import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
+import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
+import ImageModal from "./components/ImageModal/ImageModal";
 
-const ACCESS_KEY = "jR7Xt7URuZ_kReM4kcHxUb7McKdbpPMpRpx2TU-QkkY";
+const ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
 
 const App = () => {
   const [images, setImages] = useState([]);
@@ -19,8 +18,13 @@ const App = () => {
   const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
+    setPage(1);
+    setImages([]);
+  }, [query]);
+
+  useEffect(() => {
     if (!query) return;
-    
+
     const fetchImages = async () => {
       setLoading(true);
       setError(null);
@@ -40,8 +44,6 @@ const App = () => {
 
   const handleSearch = (newQuery) => {
     setQuery(newQuery);
-    setPage(1);
-    setImages([]);
   };
 
   const handleLoadMore = () => setPage((prevPage) => prevPage + 1);
@@ -49,7 +51,6 @@ const App = () => {
   return (
     <div>
       <SearchBar onSubmit={handleSearch} />
-      <ToastContainer />
       {error && <ErrorMessage message={error} />}
       <ImageGallery images={images} onImageClick={setSelectedImage} />
       {loading && <Loader />}
