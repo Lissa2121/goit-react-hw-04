@@ -1,0 +1,25 @@
+.contactList {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.contactItem {
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: #4b4b47;
+    transition: transform .3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 260px;
+}
+
+.contactItem:hover {
+    transform: scale(1.05);
+}
